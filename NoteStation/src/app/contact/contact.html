@@ -1,0 +1,99 @@
+<!-- NAVBAR -->
+<header>
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/Img/0-logo.png" alt="NoteStation Logo" />
+    </a>
+
+    <div class="nav-left">
+      <a routerLink="/browse">Browse Notes</a>
+      <a routerLink="/register">Register</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/about">About Us</a>
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <a routerLink="/login" class="nav-button">Login</a>
+  </div>
+</header>
+
+<!-- CONTACT CARD -->
+<div class="contact">
+
+  <!-- LEFT -->
+  <div class="contact-info">
+    <h2>Contact Details</h2>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <img src="assets/Img/32-phone.png" alt="Phone icon" />
+        <strong>Phone</strong>
+        +91 98243 90618
+      </div>
+
+      <div class="info-item">
+        <img src="assets/Img/33-email.png" alt="Email icon" />
+        <strong>Email</strong>
+        support@notestation.com
+      </div>
+
+      <div class="info-item">
+        <img src="assets/Img/34-location.png" alt="Location icon" />
+        <strong>Location</strong>
+        137, Silver Hub,<br />
+        Surat, Gujarat
+      </div>
+
+      <div class="info-item">
+        <img src="assets/Img/35-time.png" alt="Timing icon" />
+        <strong>Timing</strong>
+        Mon - Sat<br />
+        1:00 PM - 6:00 PM
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="contact-form">
+    <h2>Send Message</h2>
+
+    <label>Your Name</label>
+    <input type="text" placeholder="Your full name" [(ngModel)]="name"/>
+
+    <label>Your Email</label>
+    <input type="email" placeholder="you@example.com" [(ngModel)]="email"/>
+
+    <label>Subject</label>
+    <input type="text" placeholder="Subject" [(ngModel)]="subject"/>
+
+    <label>Your Message</label>
+    <textarea placeholder="Type your message..." [(ngModel)]="message"></textarea>
+
+    <button class="send-btn" (click)="sendMessage()">Send Message</button>
+  </div>
+
+</div>
+
+  <footer class="footer">
+  <div class="footer-content">
+
+    <h2 class="footer-logo">NoteStation</h2>
+    <p class="footer-tagline">Share • Learn • Grow</p>
+
+    <h3 class="footer-title">Quick Links</h3>
+
+    <ul class="footer-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/browse">Browse Notes</a></li>
+      <li><a routerLink="/upload">Upload Notes</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+    </ul>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 NoteStation. All rights reserved | Made for learners, by learners.
+  </div>
+</footer>

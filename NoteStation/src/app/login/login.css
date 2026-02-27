@@ -1,0 +1,264 @@
+body {
+  min-height: 100vh;
+  background: url("/assets/Img/11-login.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  padding-top: 70px;
+}
+
+/* ================= NAVBAR ================= */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  padding: 0 40px;
+  background: rgba(0, 0, 0, 0.92); /* PURE BLACK */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.left-nav {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 70px;
+  width: 95px;
+  margin-left: -15px;
+  margin-right: -5px;
+}
+
+/* NAV LINKS */
+.left-links a,
+.right-links a {
+  position: relative;
+  color: #ffffff;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 6px;
+}
+
+/* 🔥 UNDERLINE EFFECT */
+.left-links a::after,
+.right-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #facc3c;
+  transition: width 0.3s ease-in-out;
+}
+
+.left-links a:hover::after,
+.right-links a:hover::after {
+  width: 100%;
+}
+
+.left-links a:hover,
+.right-links a:not(.login-pill):hover {
+  color: #facc3c;
+}
+
+/* ================= PAGE WRAPPER ================= */
+.page-wrapper {
+  min-height: calc(100vh - 70px - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= FORM ================= */
+.form-container {
+  width: 500px;
+  padding: 40px 50px;
+  background: rgba(0, 0, 0, 0.70); /* TRUE BLACK GLASS */
+  border-radius: 16px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+h2 {
+  text-align: center;
+  color: #facc3c;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  color: #dddddd;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #111111;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+input::placeholder {
+  color: #777;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background: #facc3c;
+  color: #1e1e1e;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+button:hover {
+  background: #f4d47c;
+}
+
+.login-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #cccccc;
+}
+
+.login-link a {
+  color: #facc3c;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  background: #000000;
+  color: #cccccc;
+  text-align: center;
+  padding: 30px 10px;
+  margin-top: 80px;
+}
+
+/* PASSWORD TOGGLE */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper i {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #facc3c;
+}
+
+/* ===================================================== */
+/* 🔥 LOGIN PILL BUTTON 🔥 */
+/* ===================================================== */
+
+.right-links .login-pill {
+  background: #facc3c;
+  color: #1e1e1e;
+  padding: 10px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 25px;
+  box-shadow: 0 6px 18px rgba(250, 204, 60, 0.45);
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.right-links .login-pill:hover {
+  background: #e7c159;
+  transform: translateY(-1px);
+  color: #000000;
+}
+
+/* Disable underline for pill ONLY */
+.right-links .login-pill::after {
+  display: none;
+}
+/* ================= FOOTER ================= */
+.footer {
+  background: #000000;
+  color: #ffffff;
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+/* Brand */
+.footer-logo {
+  color: #facc3c;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  color: #dcdcdc;
+  font-size: 15px;
+  margin-bottom: 35px;
+}
+
+/* Section title */
+.footer-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin: 10px 0;
+}
+
+.footer-links a {
+  color: #ffffff;            /* WHITE links */
+  font-size: 16px;
+  text-decoration: none;     /* no underline by default */
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #facc3c;            /* yellow on hover */
+  text-decoration: underline;
+}
+
+
+/* Bottom bar */
+.footer-bottom {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 13px;
+  color: #bdbdbd;
+}

@@ -1,0 +1,264 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: url("/assets/Img/31-contact.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+  color: #f9f9f9;
+}
+
+/* NAVBAR */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  padding: 0 40px;
+  background: rgba(0,0,0,0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  margin-left: -15px;
+  height: 70px;
+  width: 95px;
+}
+
+/* NAV LINKS */
+.nav-left {
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 16px;
+}
+
+.nav-left a {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  padding-bottom: 6px;
+}
+
+/* 🔥 UNDERLINE EFFECT */
+.nav-left a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 3px;
+  background-color: #facc3c;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-left a:hover::after {
+  width: 100%;
+}
+
+.nav-left a:hover {
+  color: #facc3c;
+}
+
+/* NAV BUTTON */
+.nav-button {
+  background: #facc3c;
+  color: #000;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  background: #f4d47c;
+}
+
+/* CONTACT CARD */
+.contact {
+  flex: 1;
+  margin: 140px auto 80px;
+  max-width: 1200px;
+  padding: 60px;
+
+  background: rgba(30, 30, 30, 0.65); /* 🔥 Option 1 applied */
+  /* backdrop-filter: blur(6px); */
+  /* -webkit-backdrop-filter: blur(6px); */
+
+  border-radius: 20px;
+  display: flex;
+  gap: 40px;
+  box-shadow:
+    0 0 50px rgba(0,0,0,0.8),
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.contact-info,
+.contact-form {
+  flex: 1;
+}
+
+h2 {
+  color: #f4d47c;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f4d47c;
+  padding-bottom: 10px;
+}
+
+/* INFO GRID */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.info-item {
+  background: rgba(255,255,255,0.06);
+  padding: 30px;
+  border-radius: 18px;
+  text-align: center;
+}
+
+.info-item img {
+  width: 70px;
+  height: 70px;
+  background: #fff;
+  padding: 10px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.info-item strong {
+  display: block;
+  color: #f4d47c;
+  margin-bottom: 6px;
+}
+
+/* FORM */
+label {
+  display: block;
+  margin: 14px 0 6px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 14px;
+  background: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 10px;
+  color: #fff;
+}
+
+textarea {
+  min-height: 120px;
+}
+
+button {
+  margin-top: 25px;
+  width: 100%;
+  padding: 16px;
+  background: #facc3c;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f4d47c;
+}
+
+/* FOOTER */
+footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .contact {
+    flex-direction: column;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-left {
+    display: none;
+  }
+}
+/* ================= FOOTER ================= */
+.footer {
+  background: #000000;
+  color: #ffffff;
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+
+/* Brand */
+.footer-logo {
+  color: #facc3c;
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  color: #dcdcdc;
+  font-size: 15px;
+  margin-bottom: 35px;
+}
+
+/* Section title */
+.footer-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin: 10px 0;
+}
+
+.footer-links a {
+  color: #ffffff;
+  font-size: 16px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #facc3c;
+  text-decoration: underline;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 13px;
+  color: #bdbdbd;
+}

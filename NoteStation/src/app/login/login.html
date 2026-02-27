@@ -1,0 +1,86 @@
+<!-- NAVBAR -->
+<header>
+  <div class="left-nav">
+    <div class="logo">
+      <img src="assets/Img/0-logo.png" alt="NoteStation Logo" />
+    </div>
+
+    <div class="left-links">
+      <a routerLink="/browse">Browse Notes</a>
+      <a routerLink="/register">Register</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/about">About Us</a>
+    </div>
+  </div>
+<div class="right-links">
+  <a routerLink="/login" class="login-pill">Login</a>
+</div>
+
+</header>
+
+<!-- LOGIN PAGE -->
+<div class="page-wrapper">
+  <div class="form-container">
+    <h2>Sign in with Email</h2>
+
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+      <label>Email address</label>
+      <input
+        type="email"
+        placeholder="Email address"
+        [(ngModel)]="formData.email"
+        name="email"
+        required
+        autocomplete="email"
+      />
+
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="formData.password"
+          name="password"
+          placeholder="Password"
+        />
+        <i
+          class="fas"
+          [class.fa-eye]="!showPassword"
+          [class.fa-eye-slash]="showPassword"
+          (click)="togglePassword()"
+        ></i>
+      </div>
+
+      <button type="submit">Sign in</button>
+    </form>
+
+    <p class="login-link">
+      Don’t have an account?
+      <a routerLink="/register">Get started for free!</a>
+    </p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+
+  <footer class="footer">
+  <div class="footer-content">
+
+    <h2 class="footer-logo">NoteStation</h2>
+    <p class="footer-tagline">Share • Learn • Grow</p>
+
+    <h3 class="footer-title">Quick Links</h3>
+
+    <ul class="footer-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/browse">Browse Notes</a></li>
+      <li><a routerLink="/upload">Upload Notes</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+    </ul>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 NoteStation. All rights reserved | Made for learners, by learners.
+  </div>
+</footer>

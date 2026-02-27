@@ -1,0 +1,328 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <img src="assets/Img/0-clogo.png" alt="Logo">
+      </div>
+      <div class="brand-name">NoteStation</div>
+    </div>
+    
+    <div class="nav-menu">
+      <div class="nav-item" [class.active]="currentPage === 'dashboard'" (click)="changePage('dashboard')">
+        <i class="fas fa-tachometer-alt"></i> Dashboard
+      </div>
+      <div class="nav-item" [class.active]="currentPage === 'upload'" (click)="changePage('upload')">
+        <i class="fas fa-cloud-upload-alt"></i> Upload Notes
+      </div>
+      <div class="nav-item" [class.active]="currentPage === 'my-notes'" (click)="changePage('my-notes')">
+        <i class="fas fa-sticky-note"></i> My Notes
+      </div>
+      <div class="nav-item" [class.active]="currentPage === 'trash'" (click)="changePage('trash')">
+        <i class="fas fa-trash"></i> Trash
+      </div>      
+      <div class="nav-item" [class.active]="currentPage === 'categories' || currentPage === 'category-detail'" (click)="changePage('categories')">
+        <i class="fas fa-th-large"></i> Categories
+      </div>
+      <div class="nav-item" [class.active]="currentPage === 'settings'" (click)="changePage('settings')">
+        <i class="fas fa-cog"></i> Settings
+      </div>
+    </div>
+
+    <div class="logout-wrapper" (click)="logout()" style="cursor: pointer; margin-top: auto;">
+      <div class="logout-box">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    
+    <div *ngIf="currentPage === 'dashboard'">
+      <header class="header">
+        <div class="welcome-msg">
+          <h2>Welcome Back, <span>{{userName}}!</span></h2>
+        </div>
+        <div class="header-tools">
+          <div class="user-profile-header">
+            <span class="user-name-text">{{userName}}</span>
+            <div class="name-initials-circle header-size">
+              <img *ngIf="profileImageUrl" [src]="profileImageUrl" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+              <span *ngIf="!profileImageUrl">{{ getInitials(userName) }}</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="card-header">
+            <div class="stat-icon note-bg"><i class="fas fa-file-alt"></i></div>
+            <h1 class="stat-number">{{ totalNotes }}</h1>
+          </div>
+          <div class="card-footer">
+            <h3>Total Notes</h3>
+            <div class="dot yellow"></div>
+          </div>
+          <div class="card-wave"></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="card-header">
+            <div class="stat-icon task-bg"><i class="fas fa-th-large"></i></div>
+            <h1 class="stat-number">4</h1>
+            <span class="fixed-label">Fixed Categories</span>
+          </div>
+          <div class="card-footer">
+            <h3>Categories</h3>
+            <div class="dot blue"></div>
+          </div>
+          <div class="card-wave"></div>
+        </div>
+
+        <div class="stat-card">
+          <div class="card-header">
+            <div class="stat-icon trash-bg"><i class="fas fa-trash-alt"></i></div>
+            <h1 class="stat-number">{{ trashCount }}</h1>
+          </div>
+          <div class="card-footer">
+            <h3>Trash</h3>
+            <div class="dot red"></div>
+          </div>
+          <div class="card-wave"></div>
+        </div>
+      </div>
+
+      <div class="layout-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Recent Notes</h3>
+            <span class="view-all" (click)="changePage('my-notes')" style="cursor:pointer">View All <i class="fas fa-chevron-right"></i></span>
+          </div>
+          <ul class="note-list">
+            <li *ngFor="let note of recentNotes">
+              <i [class]="getFileIcon(note.fileName)" [style.color]="getFileColor(note.fileName)"></i> 
+              {{ note.title }} 
+              <span>{{ note.category }}</span>
+              <i class="fas fa-bookmark yellow-txt"></i>
+            </li>
+            <li *ngIf="recentNotes.length === 0">No notes found.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentPage === 'upload'">
+      <header class="header">
+        <div class="welcome-msg">
+          <h2>Upload <span>New Note</span></h2>
+        </div>
+      </header>
+      <div class="upload-vertical-stack">
+        <div class="panel upload-box-full">
+            <div class="drop-zone" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <h3 *ngIf="!fileName">Drag & Drop Files</h3>
+                <h3 *ngIf="fileName">{{ fileName }}</h3>
+                <p>Supported: PDF, DOCX, PNG, JPG</p>
+                <button class="browse-btn" (click)="fileInput.click()">Browse Files</button>
+                <input type="file" #fileInput hidden accept=".pdf,.docx,.png,.jpg" (change)="onFileSelected($event)"/>
+            </div>
+        </div>
+        <div class="panel form-panel-wide">
+          <h3>Note Details</h3>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Note Title</label>
+              <input type="text" class="custom-input" [(ngModel)]="noteTitle" placeholder="e.g. Chemistry Notes" />
+            </div>
+            <div class="form-group flex-1">
+              <label>Select Category</label>
+              <select class="custom-input" [(ngModel)]="category">
+                <option value="Work Docs">Work Docs</option>
+                <option value="Study Materials">Study Materials</option>
+                <option value="Personal">Personal</option>
+                <option value="Images & Media">Images & Media</option>
+              </select>
+            </div>
+          </div>
+          <button class="add-btn full-width" (click)="uploadNote()">
+            <i class="fas fa-cloud-upload-alt"></i> Complete Upload
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentPage === 'my-notes'">
+      <header class="header">
+        <div class="welcome-msg"><h2>My <span>Notes Library</span></h2></div>
+        <div class="header-tools">
+          <div class="search-wrap">
+            <i class="fas fa-search"></i>
+            <input type="text" [(ngModel)]="searchText" placeholder="Search in notes...">
+          </div>
+          <button class="add-btn" (click)="changePage('upload')" style="padding: 10px 20px;">
+            <i class="fas fa-plus"></i> New Note
+          </button>
+        </div>
+      </header>
+
+      <div class="notes-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px;">
+        <div class="note-card-item" *ngFor="let note of filteredNotes">
+          <div class="click-area" (click)="viewNote(note)" style="cursor: pointer;">
+            <div class="note-thumb">
+              <i [class]="getFileIcon(note.fileName)" [style.color]="getFileColor(note.fileName)"></i>
+            </div>
+            <div class="note-info-box">
+              <h4>{{ note.title }}</h4>
+              <p>{{ note.category }} • {{ note.fileName.split('.').pop()?.toUpperCase() }}</p>
+            </div>
+          </div>
+          <div class="note-actions">
+            <span><i class="far fa-clock"></i> {{ note.createdAt | date:'mediumDate' }}</span>
+            <div class="action-dropdown">
+              <i class="fas fa-ellipsis-v" (click)="note.showMenu = !note.showMenu"></i>
+              <div class="dropdown-content" *ngIf="note.showMenu">
+                <div (click)="downloadNote(note)"><i class="fas fa-download"></i> Download</div>
+                <div (click)="deleteNote(note)" style="color: #ff4444;"><i class="fas fa-trash"></i> Delete</div>
+              </div>
+            </div>
+          </div>         
+        </div>
+        <div *ngIf="filteredNotes.length === 0" style="grid-column: 1/-1; text-align: center; color: #888; padding: 50px;">
+          <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 10px;"></i>
+          <p>No notes found.</p>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentPage === 'trash'">
+      <header class="header">
+        <div class="welcome-msg"><h2>Recycle <span>Bin</span></h2></div>
+        <div class="header-tools">
+          <button class="empty-btn" (click)="restoreAll()" style="margin-right: 10px;">
+            <i class="fas fa-redo"></i> Restore All
+          </button>
+          <button class="delete-permanent-btn" (click)="emptyTrash()">
+            <i class="fas fa-fire"></i> Empty Trash
+          </button>
+        </div>
+      </header>
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Deleted Items</h3>
+          <p style="color: #888; font-size: 12px;">Items will be permanently deleted after 30 days</p>
+        </div>
+        <ul class="note-list">
+          <li *ngFor="let note of trashNotes">
+            <i [class]="getFileIcon(note.fileName)" style="color: #666;"></i> 
+            {{ note.title }} 
+            <div class="trash-actions">
+              <i class="fas fa-undo-alt restore-icon" (click)="restoreNote(note)" title="Restore"></i>
+              <i class="fas fa-times-circle delete-icon" (click)="permanentDelete(note)" title="Delete Permanently"></i>
+            </div>
+          </li>
+          <li *ngIf="trashNotes.length === 0" style="justify-content: center; color: #666;">Trash is empty!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div *ngIf="currentPage === 'categories'">
+  <header class="header">
+    <div class="welcome-msg"><h2>All <span>Categories</span></h2></div>
+  </header>
+  <div class="categories-grid">
+    <div class="category-card" (click)="viewCategory('Study Materials')" style="cursor: pointer;">
+      <div class="cat-top"><div class="cat-icon study-bg"><i class="fas fa-book"></i></div></div>
+      <div class="cat-info"><h3>Study Materials</h3></div>
+    </div>
+    
+    <div class="category-card" (click)="viewCategory('Work Docs')" style="cursor: pointer;">
+      <div class="cat-top"><div class="cat-icon work-bg"><i class="fas fa-briefcase"></i></div></div>
+      <div class="cat-info"><h3>Work Docs</h3></div>
+    </div>
+
+    <div class="category-card" (click)="viewCategory('Personal')" style="cursor: pointer;">
+      <div class="cat-top"><div class="cat-icon personal-bg"><i class="fas fa-user"></i></div></div>
+      <div class="cat-info"><h3>Personal</h3></div>
+    </div>
+
+    <div class="category-card" (click)="viewCategory('Images & Media')" style="cursor: pointer;">
+      <div class="cat-top"><div class="cat-icon images-bg"><i class="fas fa-image"></i></div></div>
+      <div class="cat-info"><h3>Images & Media</h3></div>
+    </div>
+  </div>
+</div>
+
+    <div *ngIf="currentPage === 'category-detail'">
+      <header class="header">
+        <div class="welcome-msg"><h2>Category: <span>{{selectedCategoryName}}</span></h2></div>
+        <button class="add-btn" (click)="changePage('categories')">Back</button>
+      </header>
+      <div class="notes-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 20px;">
+        <div class="note-card-item" *ngFor="let note of categorySpecificNotes">
+          <div class="click-area" (click)="viewNote(note)" style="cursor: pointer;">
+            <div class="note-thumb">
+              <i [class]="getFileIcon(note.fileName)" [style.color]="getFileColor(note.fileName)"></i>
+            </div>
+            <div class="note-info-box">
+              <h4>{{ note.title }}</h4>
+              <p>{{ note.category }}</p>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="categorySpecificNotes.length === 0" style="grid-column: 1/-1; text-align: center; color: #888; padding: 50px;">
+          Is category mein koi file nahi mili.
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentPage === 'settings'">
+      <header class="header">
+        <div class="welcome-msg"><h2>Account <span>Settings</span></h2></div>
+      </header>
+      <div class="settings-container">
+        <div class="panel profile-section">
+          <div class="avatar-edit initials-profile">
+            <div class="profile-initials-large">
+              <img *ngIf="profileImageUrl" [src]="profileImageUrl" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">
+              <span *ngIf="!profileImageUrl">{{ getInitials(userName) }}</span>
+            </div>
+            <button class="change-photo-btn" (click)="profileInput.click()"><i class="fas fa-camera"></i></button>
+            <input type="file" #profileInput hidden accept="image/*" (change)="onProfileImageSelected($event)">
+          </div>
+          <div class="profile-info"><h3>{{userName}}</h3></div>
+          <div class="user-info">
+            <div *ngIf="selectedProfileName" style="color: #f1c40f; font-size: 11px; margin-top: 2px; margin-left: 420px;">
+              <i class="fas fa-image"></i> {{ selectedProfileName }}
+            </div>
+          </div>
+          <hr class="divider">
+          
+          <div class="form-group">
+            <h3><i class="fas fa-shield-alt yellow-txt"></i> Security</h3><br>
+            <label>Full Name</label>
+            <input type="text" class="custom-input" [(ngModel)]="userName">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="custom-input" [value]="email" disabled>
+          </div>
+          <div class="form-group" style="margin-top: 15px;">
+            <label>Current Password</label>
+            <input type="password" class="custom-input" [(ngModel)]="currentPassword" placeholder="Current Password">
+          </div>
+          
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" class="custom-input" [(ngModel)]="newPassword" placeholder="Min 6 characters + @">
+          </div>
+          <button class="add-btn" style="width: 100%; margin-top: 10px;" (click)="updateProfile()">Update Profile</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>

@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<nav>
+  <div class="d-flex align-items-center gap-3">
+    <a routerLink="/" class="navbar-logo d-flex align-items-center gap-2">
+      <img src="assets/Img/0-logo.png" alt="NoteStation Logo" />
+    </a>
+
+    <div class="nav-links-left">
+      <a routerLink="/browse">Browse Notes</a>
+      <a routerLink="/register">Register</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/about">About Us</a>
+    </div>
+  </div>
+
+  <div class="nav-links-right">
+    <a routerLink="/login" class="btn btn-light">Login</a>
+  </div>
+</nav>
+
+<header class="browse-header">
+  <h1>Browse Notes</h1>
+  <p>Discover and download notes shared by our learning community.</p>
+</header>
+
+<section class="container">
+  
+  <div class="text-center py-5" *ngIf="loading">
+    <div class="spinner-border" role="status"></div>
+  </div>
+
+  <div class="row" *ngIf="!loading && allNotes && allNotes.length > 0">
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let note of allNotes">
+      
+      <div class="note-card card-hover h-100">
+        
+        <div class="text-center">
+          <i class="fa-solid note-icon" 
+            [ngClass]="getFileIcon(note.fileName)"
+            [style.color]="getFileColor(note.fileName)">
+          </i>
+        </div>
+        
+        <div class="note-details">
+          <h5 class="card-title text-truncate" [title]="note.title">
+            {{ note.title }}
+          </h5>
+          
+          <p class="card-text">
+            <b>Category:</b> {{ note.category }}
+          </p>
+
+          <div class="mt-3 d-flex flex-row gap-2">
+            <a [href]="'http://localhost:3000/uploads/' + note.fileName" 
+              target="_blank" 
+              class="btn-download text-center flex-fill">
+              View
+            </a>
+            
+            <button type="button" 
+                    (click)="downloadFile(note.fileName)" 
+                    class="btn-download flex-fill">
+              Download 
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12 text-center py-5" *ngIf="!loading && allNotes.length === 0">
+    <h3 class="text-muted">No notes available at the moment.</h3>
+  </div>
+</section>
+
+  <footer class="footer">
+  <div class="footer-content">
+
+    <h2 class="footer-logo">NoteStation</h2>
+    <p class="footer-tagline">Share • Learn • Grow</p>
+
+    <h3 class="footer-title">Quick Links</h3>
+
+    <ul class="footer-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/browse">Browse Notes</a></li>
+      <li><a routerLink="/upload">Upload Notes</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+    </ul>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 NoteStation. All rights reserved | Made for learners, by learners.
+  </div>
+</footer>

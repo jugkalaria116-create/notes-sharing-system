@@ -1,0 +1,88 @@
+<nav>
+    <div class="d-flex align-items-center gap-3">
+      <a routerLink="/" class="navbar-logo d-flex align-items-center gap-2">
+        <img src="assets/Img/0-logo.png" alt="NoteStation Logo" />
+      </a>
+      <div class="nav-links-left">
+        <a routerLink="/browse">Browse Notes</a>
+        <a routerLink="/register">Register</a>
+        <a routerLink="/contact">Contact</a>
+        <a routerLink="/about">About Us</a>
+      </div>
+    </div>
+    <div class="nav-links-right">
+      <a routerLink="/login" class="btn btn-light">Login</a>
+    </div>
+</nav>
+
+<header class="reveal">
+    <h1>Welcome to NoteStation</h1>
+    <p>Connect, collaborate and expand your understanding with a vibrant community of learners.</p>
+    <a routerLink="/browse" class="btn btn-light mt-3">Start Browsing</a>
+</header>
+
+<section class="container mt-5 reveal">
+    <h2 class="text-center mb-4 text-light">What You Can Do on NoteStation</h2>
+    <div class="row text-center reveal-stagger">
+      <div class="col-md-4 mb-4">
+        <div class="card card-hover p-3">
+          <img src="assets/Img/2-find.png" alt="Explore Notes" class="mx-auto d-block mt-3" />
+          <div class="card-body">
+            <h5 class="card-title">Discover Vast Knowledge</h5>
+            <p class="card-text">Dive into a rich library of notes on diverse subjects. Find exactly what you need.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card card-hover p-3">
+          <img src="assets/Img/3-upload.png" alt="Upload Notes" class="mx-auto d-block mt-3" />
+          <div class="card-body">
+            <h5 class="card-title">Contribute & Empower</h5>
+            <p class="card-text">Share your unique insights and help others grow. Your notes make a difference.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card card-hover p-3">
+          <img src="assets/Img/4-study.png" alt="Study Smarter" class="mx-auto d-block mt-3" />
+          <div class="card-body">
+            <h5 class="card-title">Join a Thriving Community</h5>
+            <p class="card-text">Connect with passionate learners, engage in discussions, and collaborate on projects.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="reveal">
+    <div class="card card-hover cta-card text-center">
+      <h2 class="card-title">Ready to Transform Your Learning?</h2>
+      <p class="card-text">Sign up today and become part of a global network dedicated to shared knowledge.</p>
+      <a routerLink="/register" class="btn cta-btn ">Join Now</a>
+    </div>
+</section>
+
+<footer class="footer reveal">
+  <div class="footer-content">
+
+    <h2 class="footer-logo">NoteStation</h2>
+    <p class="footer-tagline">Share • Learn • Grow</p>
+
+    <h3 class="footer-title">Quick Links</h3>
+
+    <ul class="footer-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/browse">Browse Notes</a></li>
+      <li><a routerLink="/upload">Upload Notes</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+    </ul>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 NoteStation. All rights reserved | Made for learners, by learners.
+  </div>
+</footer>

@@ -1,0 +1,390 @@
+<title>NoteStation | Admin Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<div class="dashboard-wrapper page-load god-ui gpu">
+   <aside class="sidebar">
+      <div class="brand">
+         <div class="brand-icon"><img src="assets/Img/0-clogo.png" /></div>
+         <div class="brand-name">NoteStation</div>
+      </div>
+      <div class="nav-menu">
+         <div class="nav-item" [class.active]="activeTab === 'dashboard'" (click)="activeTab = 'dashboard'">
+            <i class="fa-solid fa-house"></i> Dashboard
+         </div>
+         <div class="nav-item" [class.active]="activeTab === 'users'" (click)="activeTab = 'users'">
+            <i class="fa-solid fa-users"></i> Users
+         </div>
+         <div class="nav-item" [class.active]="activeTab === 'notes'" (click)="activeTab = 'notes'">
+            <i class="fa-solid fa-file-lines"></i> Notes
+         </div>
+         <div class="nav-item" [class.active]="activeTab === 'trash'" (click)="activeTab = 'trash'">
+            <i class="fa-solid fa-trash"></i> Trash
+         </div>
+         <div class="nav-item" [class.active]="activeTab === 'contact'" (click)="activeTab = 'contact'">
+            <i class="fa-solid fa-envelope"></i> Contact Queries
+         </div>
+      </div>
+       <div class="logout-wrapper" (click)="logout()" style="cursor: pointer; margin-top: auto;">
+      <div class="logout-box">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+      </div>
+    </div>
+   </aside>
+
+   <main class="main-content">
+      <div class="header">
+         <div class="welcome-msg">
+            <h2>Welcome, <span>Admin</span></h2>
+         </div>
+         <div class="header-tools">
+            <div class="header-user">
+               <div class="user-info-ad">
+                  <div class="name">Admin</div>
+                  <div class="role">Administrator</div>
+               </div>
+               <img src="assets/Img/0-logo.png" alt="Admin" class="admin-img">
+            </div>
+         </div>
+      </div>
+      <hr style="border: 0; height: 1px; background: #222; margin-bottom: 30px;">
+
+      <div *ngIf="activeTab === 'dashboard'">
+         <!-- ===== CHART PANEL ADDON ===== -->
+<div class="panel chart-panel tilt-card cinematic">
+  <div class="panel-head">
+    <h3>System Analytics</h3>
+  </div>
+
+  <canvas id="adminChart" height="90"></canvas>
+</div>
+<div class="panel chart-panel" style="margin-top:25px;">
+  <div class="panel-head">
+    <h3>Distribution Overview</h3>
+  </div>
+
+  <div class="charts-row">
+
+  <!-- PIE CARD -->
+  <div class="chart-card tilt-card">
+    <h3 class="chart-title">Distribution Overview</h3>
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <!-- DONUT CARD -->
+  <div class="chart-card tilt-card">
+    <h3 class="chart-title">System Ratio</h3>
+    <canvas id="donutChart"></canvas>
+  </div>
+
+</div>
+</div>
+         <div class="stats-grid">
+            <div class="stat-card notes tilt-card">
+               <div class="card-header">
+                  <div class="stat-icon note-bg"><i class="fa-solid fa-file-lines"></i></div>
+                  <div class="stat-number">{{stats.totalNotes}}</div>
+               </div>
+               <div class="card-footer">
+                  <h3>Total Notes</h3>
+                  <div class="dot yellow pulse"></div>
+               </div>
+            </div>
+            <div class="stat-card categories">
+               <div class="card-header">
+                  <div class="stat-icon category-bg"><i class="fa-solid fa-envelope"></i></div>
+                  <div class="stat-number">{{stats.messageCount}}</div>
+               </div>
+               <div class="card-footer">
+                  <h3>Messages</h3>
+                  <div class="dot blue"></div>
+               </div>
+            </div>
+            <div class="stat-card users">
+               <div class="card-header">
+                  <div class="stat-icon user-bg"><i class="fa-solid fa-users"></i></div>
+                  <div class="stat-number">{{stats.totalUsers}}</div>
+               </div>
+               <div class="card-footer">
+                  <h3>Active Users</h3>
+                  <div class="dot green"></div>
+               </div>
+            </div>
+            <div class="stat-card trash">
+               <div class="card-header">
+                  <div class="stat-icon trash-bg"><i class="fa-solid fa-trash"></i></div>
+                  <div class="stat-number">{{stats.trashCount}}</div>
+               </div>
+               <div class="card-footer">
+                  <h3>Trash</h3>
+                  <div class="dot red"></div>
+               </div>
+            </div>
+         </div>
+         
+        <div class="panels-grid">
+          <div class="panel">
+              <div class="panel-head">
+                <h3>Recent <span style="color: var(--accent-yellow)">Registers</span></h3>
+                <span class="view-all" (click)="activeTab = 'users'">View All</span>
+              </div>
+              <hr>
+              <div class="login-list-container">
+                <div class="login-row" *ngFor="let user of users | slice:0:5">
+                  <div class="login-left">
+                    <div class="profile-circle">
+                      <img *ngIf="user.img" [src]="'http://localhost:3000/uploads/' + user.img" class="avatar">
+                      <div *ngIf="!user.img" class="avatar-initial">{{ user.firstName[0] | uppercase }}</div>
+                    </div>
+                    
+                    <div class="user-info-dash">
+                      <span class="user-name">{{ user.firstName }}</span>
+                      <span class="user-email"><i class="fa-solid fa-envelope"></i>&nbsp;{{ user.email }}</span>
+                    </div>
+                  </div>
+
+                  <div class="login-right">
+                    <span class="time-ago-text">
+                      <i class="fa-solid fa-clock"></i> {{ (user.updatedAt || user.createdAt) | timeAgo }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="no-login-msg" *ngIf="users.length === 0">
+                    <i class="fa-solid fa-user-clock"></i>
+                    <p>Waiting for new logins...</p>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'users'" class="users-section">
+         <div class="section-header">
+            <h3>Registered <span>Users</span></h3>
+            <div class="search-box">
+               <i class="fas fa-search"></i>
+               <input type="text" placeholder="Search user..." (input)="searchUser($event)">
+            </div>
+         </div>
+         <div class="users-card">
+            <table>
+               <thead>
+                  <tr>
+                     <th>User</th>
+                     <th>Email</th>
+                     <th>Notes</th>
+                     <th>Joined At</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let user of users">
+                     <td>
+                        <div class="user-info">
+                           <img *ngIf="user.img" [src]="'http://localhost:3000/uploads/' + user.img" alt="User">
+                           <div *ngIf="!user.img" class="name-initial">
+                              {{ user.firstName[0] | uppercase }}
+                           </div>
+                           <span>{{ user.firstName }}</span>
+                        </div>
+                     </td>
+                     <td>{{ user.email }}</td>
+                     <td style="text-align: center;">
+                        <span class="notes-badge">{{ user.notesCount || 0 }}</span>
+                     </td>
+                     <td>{{ user.createdAt | date:'dd/MM/yyyy' }}</td>
+                     <td>
+                        <button class="btn delete" (click)="deleteUser(user._id)">Delete</button>
+                     </td>
+                  </tr>
+                  <tr *ngIf="users.length === 0">
+                     <td colspan="5" style="text-align: center; padding: 30px; color: #777;">
+                        <i class="fa-solid fa-user-slash" style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
+                        No users found in database.
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+
+      <div *ngIf="activeTab === 'notes'" class="notes-section">
+         <div class="section-header">
+            <h3>Uploaded <span>Notes</span></h3>
+            <div class="search-box">
+               <i class="fas fa-search"></i>
+               <input type="text" placeholder="Search notes..." (input)="searchData($event, 'notes')">
+            </div>
+         </div>
+         <div class="notes-card">
+            <table>
+               <thead>
+                  <tr>
+                     <th>Note</th>
+                     <th>Category</th>
+                     <th>Uploaded By</th>
+                     <th>Date</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let note of notes">
+                     <td>
+                        <div class="note-info">
+                           <div class="file-icon-box" [style.backgroundColor]="getFileColor(note.fileName) + '20'" [style.color]="getFileColor(note.fileName)">
+                              <i class="fa-solid" [ngClass]="getFileIcon(note.fileName)"></i>
+                           </div>
+                           <span class="file-name-text">{{ note.title }}</span>
+                        </div>
+                     </td>
+                     <td>{{ note.category }}</td>
+                     <td><span class="user-tag">{{ note.uploadedByName }}</span></td>
+                     <td>{{ note.createdAt | date:'dd/MM/yyyy' }}</td>
+                     <td>
+                        <button class="btn view" (click)="viewFile(note.fileName)">View</button>
+                        <button class="btn delete" (click)="deleteNote(note._id)">Trash</button>
+                     </td>
+                  </tr>
+                  <tr *ngIf="notes.length === 0">
+                     <td colspan="5" style="text-align: center; padding: 30px; color: #777;">
+                        <i class="fa-solid fa-file-circle-xmark" style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
+                        No notes found in database.
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+
+      <div *ngIf="activeTab === 'trash'" class="trash-section">
+         <div class="section-header">
+            <h3>Trash <span>Notes</span> (System Wide)</h3>
+            <div class="bulk-actions">
+               <button class="btn-restore-all" (click)="restoreAllTrash()"><i class="fa-solid fa-rotate-left"></i> Restore All</button>
+               <button class="btn-clear-all" (click)="emptyTrash()"><i class="fa-solid fa-dumpster"></i> Empty Trash</button>
+            </div>
+         </div>
+         <div class="notes-card">
+            <table>
+               <thead>
+                  <tr>
+                     <th>Note</th>
+                     <th>Category</th>
+                     <th>Deleted From (User)</th>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let tn of trashNotes">
+                     <td>
+                        <div class="note-info">
+                           <div class="file-icon-box" [style.backgroundColor]="getFileColor(tn.fileName) + '20'" [style.color]="getFileColor(tn.fileName)">
+                              <i class="fa-solid" [ngClass]="getFileIcon(tn.fileName)"></i>
+                           </div>
+                           <span>{{ tn.title }}</span>
+                        </div>
+                     </td>
+                     <td>{{ tn.category }}</td>
+                     <td><span class="user-tag">{{ tn.userId?.firstName || 'Unknown' }}</span></td>
+                     <td>
+                        <button class="btn restore-btn" (click)="restoreNote(tn._id)"><i class="fas fa-undo-alt"></i></button>
+                        <button class="btn delete-permanently" (click)="deletePermanently(tn._id)"><i class="fa-solid fa-trash-can"></i></button>
+                     </td>
+                  </tr>
+                  <tr *ngIf="trashNotes.length === 0">
+                     <td colspan="4" style="text-align: center; padding: 40px; color: #888;">Trash is empty!</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+
+      <div *ngIf="activeTab === 'contact'" class="contact-section">
+         <div class="section-header">
+            <h3>Contact <span>Queries</span></h3>
+         </div>
+         <div class="notes-card" *ngIf="!selectedQuery">
+            <table>
+               <thead>
+                  <tr>
+                     <th>USER</th>
+                     <th>EMAIL</th>
+                     <th>SUBJECT</th>
+                     <th>DATE / TIME</th>
+                     <th>ACTION</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let q of queries">
+                     <td>{{ q.name }}</td>
+                     <td>{{ q.email }}</td>
+                     <td><span class="category-tag">{{ q.subject || 'No Subject' }}</span></td>
+                     <td>{{ q.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                     <td>
+                        <div class="action-btns">
+                           <button class="view-msg-btn" (click)="viewQuery(q)">View</button>
+                           <button class="icon-del-btn" (click)="deleteQuery(q._id)">Delete</button>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <div class="contact-detail-wrapper" *ngIf="selectedQuery" [@fadeIn]>
+            <div class="message-card">
+               <div class="card-header-pro">
+                  <div class="sender-info-pro">
+                     <div class="user-avatar-pro">{{ selectedQuery.name[0] | uppercase }}</div>
+                     <div class="sender-text">
+                        <h2>{{ selectedQuery.name }}</h2>
+                        <span><i class="fa-solid fa-envelope"></i> {{ selectedQuery.email }}</span>
+                     </div>
+                  </div>
+                  <div class="back-action" (click)="closeQuery()">
+                     <i class="fa-solid fa-arrow-left"></i>
+                  </div>
+               </div>
+               <div class="card-divider"></div>
+               <div class="card-body-pro">
+                  <div class="subject-line">
+                     <strong>Subject:-</strong> <span class="sub">{{ selectedQuery.subject || 'No Subject' }}</span>
+                     <span class="time-stamp">{{ selectedQuery.createdAt | date:'medium' }}</span>
+                  </div>
+                  <div class="message-content-box">
+                     <p>{{ selectedQuery.message }}</p>
+                  </div>
+               </div>
+               <div class="card-footer-pro">
+                  <button class="btn-delete-pro" (click)="deleteQuery(selectedQuery._id); closeQuery()">
+                     <i class="fa-solid fa-trash-can"></i> Delete Message
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </main>
+</div>
+<script>
+document.querySelectorAll(".tilt-card").forEach(card=>{
+card.addEventListener("mousemove",e=>{
+const rect=card.getBoundingClientRect();
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+
+const centerX=rect.width/2;
+const centerY=rect.height/2;
+
+const rotateX=((y-centerY)/centerY)*-8;
+const rotateY=((x-centerX)/centerX)*8;
+
+card.style.transform=
+`perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+});
+
+card.addEventListener("mouseleave",()=>{
+card.style.transform=
+"perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+});
+});
+</script>

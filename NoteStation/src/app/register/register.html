@@ -1,0 +1,112 @@
+<header>
+  <div class="left-nav">
+    <div class="logo">
+      <a routerLink="/">
+        <img src="assets/Img/0-logo.png" alt="NoteStation Logo" />
+      </a>
+    </div>
+
+    <nav class="left-links">
+      <a routerLink="/browse">Browse Notes</a>
+      <a routerLink="/register">Register</a>
+      <a routerLink="/contact">Contact</a>
+      <a routerLink="/about">About Us</a>
+    </nav>
+  </div>
+
+  <nav class="nav-links-right">
+    <a routerLink="/login" class="nav-button">Login</a>
+  </nav>
+</header>
+
+
+<!-- ================= MAIN ================= -->
+<main class="page-wrapper">
+  <div class="form-container">
+    <h2>Create your Account</h2>
+
+    <form (ngSubmit)="register()" #form="ngForm">
+
+      <!-- First Name -->
+      <label>First Name</label>
+      <input
+        type="text"
+        name="firstName"
+        [(ngModel)]="formData.firstName"
+        required
+        placeholder="First Name or Surname"
+      />
+
+      <!-- Username -->
+      <label>User Name</label>
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="formData.username"
+        required
+        placeholder="User Name"
+      />
+
+      <!-- Email -->
+      <label>Email</label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="formData.email"
+        required
+        placeholder="Email"
+      />
+
+      <!-- Password -->
+      <label>Password</label>
+      <div class="password-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          [(ngModel)]="formData.password"
+          required
+          placeholder="Password"
+        />
+
+        <i
+          class="fas"
+          [class.fa-eye]="!showPassword"
+          [class.fa-eye-slash]="showPassword"
+          (click)="togglePassword()"
+        ></i>
+      </div>
+
+      <button type="submit" [disabled]="form.invalid">
+        Register
+      </button>
+
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a routerLink="/login">Sign in here</a>
+    </p>
+  </div>
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="footer-content">
+    <h2 class="footer-logo">NoteStation</h2>
+    <p class="footer-tagline">Share • Learn • Grow</p>
+
+    <h3 class="footer-title">Quick Links</h3>
+    <ul class="footer-links">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/browse">Browse Notes</a></li>
+      <li><a routerLink="/upload">Upload Notes</a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 NoteStation. All rights reserved | Made for learners, by learners.
+  </div>
+</footer>
