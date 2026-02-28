@@ -2,18 +2,24 @@ import { Component, ViewEncapsulation, OnInit, ChangeDetectorRef } from '@angula
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-browse',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
   templateUrl: './browse.html',
   styleUrls: ['./browse.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class BrowseComponent implements OnInit {
-  allNotes: any[] = []; 
+
+  allNotes: any[] = [];
+  filteredNotes: any[] = [];
+
   loading: boolean = false;
+  searchText: string = "";
+  selectedCategory: string = "";
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
@@ -23,12 +29,13 @@ export class BrowseComponent implements OnInit {
 
   fetchAllPublicNotes() {
     this.loading = true;
+
     this.http.get<any>('http://localhost:3000/api/admin/all-notes').subscribe({
       next: (res) => {
         if (res && res.success) {
           const rawNotes = res.notes || [];
           this.allNotes = rawNotes.filter((note: any) => !note.isDeleted);
-          this.cdr.detectChanges(); 
+          this.filteredNotes = [...this.allNotes];
         }
         this.loading = false;
         this.cdr.detectChanges();
@@ -41,7 +48,20 @@ export class BrowseComponent implements OnInit {
     });
   }
 
-  // File type ke hisaab se FontAwesome class return karega
+  applyFilters() {
+    this.filteredNotes = this.allNotes.filter(note => {
+
+      const matchesText =
+        note.title?.toLowerCase().includes(this.searchText.toLowerCase());
+
+      const matchesCategory =
+        !this.selectedCategory ||
+        note.category === this.selectedCategory;
+
+      return matchesText && matchesCategory;
+    });
+  }
+
   getFileIcon(fileName: string): string {
     if (!fileName) return 'fa-file';
     const ext = fileName.split('.').pop()?.toLowerCase();
@@ -56,23 +76,23 @@ export class BrowseComponent implements OnInit {
     }
   }
 
-  // File type ke hisaab se color return karega
   getFileColor(fileName: string): string {
-    if (!fileName) return '#facc3c'; 
+    if (!fileName) return '#facc3c';
     const ext = fileName.split('.').pop()?.toLowerCase();
     switch (ext) {
-      case 'pdf': return '#facc3c'; 
+      case 'pdf': return '#facc3c';
       case 'doc':
-      case 'docx': return '#3498db'; 
+      case 'docx': return '#3498db';
       case 'jpg':
       case 'jpeg':
-      case 'png': return '#e74c3c'; 
-      default: return '#2ecc71'; 
+      case 'png': return '#e74c3c';
+      default: return '#2ecc71';
     }
   }
 
   downloadFile(fileName: string) {
     if (!fileName) return alert("File missing");
+
     const url = `http://localhost:3000/uploads/${fileName}`;
 
     this.http.get(url, { responseType: 'blob' }).subscribe({
@@ -86,8 +106,7 @@ export class BrowseComponent implements OnInit {
         document.body.removeChild(link);
         URL.revokeObjectURL(objectUrl);
       },
-      error: (err) => {
-        console.error("Download failed:", err);
+      error: () => {
         window.open(url, '_blank');
       }
     });
