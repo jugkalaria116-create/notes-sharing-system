@@ -1,5 +1,5 @@
 <title>NoteStation | Admin Dashboard</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
 <div class="dashboard-wrapper page-load god-ui gpu">
    <aside class="sidebar">
@@ -24,12 +24,12 @@
             <i class="fa-solid fa-envelope"></i> Contact Queries
          </div>
       </div>
-       <div class="logout-wrapper" (click)="logout()" style="cursor: pointer; margin-top: auto;">
-      <div class="logout-box">
-          <i class="fas fa-sign-out-alt"></i>
-          <span>Logout</span>
-      </div> 
-    </div>
+      <div class="logout-wrapper" (click)="logout()" style="cursor: pointer; margin-top: auto;">
+         <div class="logout-box">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+         </div>
+      </div>
    </aside>
 
    <main class="main-content">
@@ -51,34 +51,34 @@
 
       <div *ngIf="activeTab === 'dashboard'">
          <!-- ===== CHART PANEL ADDON ===== -->
-<div class="panel chart-panel tilt-card cinematic">
-  <div class="panel-head">
-    <h3>System Analytics</h3>
-  </div>
+         <div class="panel chart-panel tilt-card cinematic">
+            <div class="panel-head">
+               <h3>System Analytics</h3>
+            </div>
 
-  <canvas id="adminChart" height="90"></canvas>
-</div>
-<div class="panel chart-panel" style="margin-top:25px;">
-  <div class="panel-head">
-    <h3>Distribution Overview</h3>
-  </div>
+            <canvas id="adminChart" height="90"></canvas>
+         </div>
+         <div class="panel chart-panel" style="margin-top:25px;">
+            <div class="panel-head">
+               <h3>Distribution Overview</h3>
+            </div>
 
-  <div class="charts-row">
+            <div class="charts-row">
 
-  <!-- PIE CARD -->
-  <div class="chart-card tilt-card">
-    <h3 class="chart-title">Distribution Overview</h3>
-    <canvas id="pieChart"></canvas>
-  </div>
+               <!-- PIE CARD -->
+               <div class="chart-card tilt-card">
+                  <h3 class="chart-title">Distribution Overview</h3>
+                  <canvas id="pieChart"></canvas>
+               </div>
 
-  <!-- DONUT CARD -->
-  <div class="chart-card tilt-card">
-    <h3 class="chart-title">System Ratio</h3>
-    <canvas id="donutChart"></canvas>
-  </div>
+               <!-- DONUT CARD -->
+               <div class="chart-card tilt-card">
+                  <h3 class="chart-title">System Ratio</h3>
+                  <canvas id="donutChart"></canvas>
+               </div>
 
-</div>
-</div>
+            </div>
+         </div>
          <div class="stats-grid">
             <div class="stat-card notes tilt-card">
                <div class="card-header">
@@ -121,42 +121,42 @@
                </div>
             </div>
          </div>
-         
-        <div class="panels-grid">
-          <div class="panel">
-              <div class="panel-head">
-                <h3>Recent <span style="color: var(--accent-yellow)">Registers</span></h3>
-                <span class="view-all" (click)="activeTab = 'users'">View All</span>
-              </div>
-              <hr>
-              <div class="login-list-container">
-                <div class="login-row" *ngFor="let user of users | slice:0:5">
-                  <div class="login-left">
-                    <div class="profile-circle">
-                      <img *ngIf="user.img" [src]="'http://localhost:3000/uploads/' + user.img" class="avatar">
-                      <div *ngIf="!user.img" class="avatar-initial">{{ user.firstName[0] | uppercase }}</div>
-                    </div>
-                    
-                    <div class="user-info-dash">
-                      <span class="user-name">{{ user.firstName }}</span>
-                      <span class="user-email"><i class="fa-solid fa-envelope"></i>&nbsp;{{ user.email }}</span>
-                    </div>
+
+         <div class="panels-grid">
+            <div class="panel">
+               <div class="panel-head">
+                  <h3>Recent <span style="color: var(--accent-yellow)">Registers</span></h3>
+                  <span class="view-all" (click)="activeTab = 'users'">View All</span>
+               </div>
+               <hr>
+               <div class="login-list-container">
+                  <div class="login-row" *ngFor="let user of users | slice:0:5">
+                     <div class="login-left">
+                        <div class="profile-circle">
+                           <img *ngIf="user.img" [src]="'http://localhost:3000/uploads/' + user.img" class="avatar">
+                           <div *ngIf="!user.img" class="avatar-initial">{{ user.firstName[0] | uppercase }}</div>
+                        </div>
+
+                        <div class="user-info-dash">
+                           <span class="user-name">{{ user.firstName }}</span>
+                           <span class="user-email"><i class="fa-solid fa-envelope"></i>&nbsp;{{ user.email }}</span>
+                        </div>
+                     </div>
+
+                     <div class="login-right">
+                        <span class="time-ago-text">
+                           <i class="fa-solid fa-clock"></i> {{ (user.updatedAt || user.createdAt) | timeAgo }}
+                        </span>
+                     </div>
                   </div>
 
-                  <div class="login-right">
-                    <span class="time-ago-text">
-                      <i class="fa-solid fa-clock"></i> {{ (user.updatedAt || user.createdAt) | timeAgo }}
-                    </span>
+                  <div class="no-login-msg" *ngIf="users.length === 0">
+                     <i class="fa-solid fa-user-clock"></i>
+                     <p>Waiting for new logins...</p>
                   </div>
-                </div>
-
-                <div class="no-login-msg" *ngIf="users.length === 0">
-                    <i class="fa-solid fa-user-clock"></i>
-                    <p>Waiting for new logins...</p>
-                </div>
-              </div>
-          </div>
-        </div>
+               </div>
+            </div>
+         </div>
       </div>
 
       <div *ngIf="activeTab === 'users'" class="users-section">
@@ -200,7 +200,8 @@
                   </tr>
                   <tr *ngIf="users.length === 0">
                      <td colspan="5" style="text-align: center; padding: 30px; color: #777;">
-                        <i class="fa-solid fa-user-slash" style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
+                        <i class="fa-solid fa-user-slash"
+                           style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
                         No users found in database.
                      </td>
                   </tr>
@@ -232,7 +233,8 @@
                   <tr *ngFor="let note of notes">
                      <td>
                         <div class="note-info">
-                           <div class="file-icon-box" [style.backgroundColor]="getFileColor(note.fileName) + '20'" [style.color]="getFileColor(note.fileName)">
+                           <div class="file-icon-box" [style.backgroundColor]="getFileColor(note.fileName) + '20'"
+                              [style.color]="getFileColor(note.fileName)">
                               <i class="fa-solid" [ngClass]="getFileIcon(note.fileName)"></i>
                            </div>
                            <span class="file-name-text">{{ note.title }}</span>
@@ -248,7 +250,8 @@
                   </tr>
                   <tr *ngIf="notes.length === 0">
                      <td colspan="5" style="text-align: center; padding: 30px; color: #777;">
-                        <i class="fa-solid fa-file-circle-xmark" style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
+                        <i class="fa-solid fa-file-circle-xmark"
+                           style="display: block; font-size: 2rem; margin-bottom: 10px;"></i>
                         No notes found in database.
                      </td>
                   </tr>
@@ -261,8 +264,10 @@
          <div class="section-header">
             <h3>Trash <span>Notes</span> (System Wide)</h3>
             <div class="bulk-actions">
-               <button class="btn-restore-all" (click)="restoreAllTrash()"><i class="fa-solid fa-rotate-left"></i> Restore All</button>
-               <button class="btn-clear-all" (click)="emptyTrash()"><i class="fa-solid fa-dumpster"></i> Empty Trash</button>
+               <button class="btn-restore-all" (click)="restoreAllTrash()"><i class="fa-solid fa-rotate-left"></i>
+                  Restore All</button>
+               <button class="btn-clear-all" (click)="emptyTrash()"><i class="fa-solid fa-dumpster"></i> Empty
+                  Trash</button>
             </div>
          </div>
          <div class="notes-card">
@@ -279,7 +284,8 @@
                   <tr *ngFor="let tn of trashNotes">
                      <td>
                         <div class="note-info">
-                           <div class="file-icon-box" [style.backgroundColor]="getFileColor(tn.fileName) + '20'" [style.color]="getFileColor(tn.fileName)">
+                           <div class="file-icon-box" [style.backgroundColor]="getFileColor(tn.fileName) + '20'"
+                              [style.color]="getFileColor(tn.fileName)">
                               <i class="fa-solid" [ngClass]="getFileIcon(tn.fileName)"></i>
                            </div>
                            <span>{{ tn.title }}</span>
@@ -288,8 +294,10 @@
                      <td>{{ tn.category }}</td>
                      <td><span class="user-tag">{{ tn.userId?.firstName || 'Unknown' }}</span></td>
                      <td>
-                        <button class="btn restore-btn" (click)="restoreNote(tn._id)"><i class="fas fa-undo-alt"></i></button>
-                        <button class="btn delete-permanently" (click)="deletePermanently(tn._id)"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="btn restore-btn" (click)="restoreNote(tn._id)"><i
+                              class="fas fa-undo-alt"></i></button>
+                        <button class="btn delete-permanently" (click)="deletePermanently(tn._id)"><i
+                              class="fa-solid fa-trash-can"></i></button>
                      </td>
                   </tr>
                   <tr *ngIf="trashNotes.length === 0">
@@ -366,25 +374,25 @@
    </main>
 </div>
 <script>
-document.querySelectorAll(".tilt-card").forEach(card=>{
-card.addEventListener("mousemove",e=>{
-const rect=card.getBoundingClientRect();
-const x=e.clientX-rect.left;
-const y=e.clientY-rect.top;
+   document.querySelectorAll(".tilt-card").forEach(card => {
+      card.addEventListener("mousemove", e => {
+         const rect = card.getBoundingClientRect();
+         const x = e.clientX - rect.left;
+         const y = e.clientY - rect.top;
 
-const centerX=rect.width/2;
-const centerY=rect.height/2;
+         const centerX = rect.width / 2;
+         const centerY = rect.height / 2;
 
-const rotateX=((y-centerY)/centerY)*-8;
-const rotateY=((x-centerX)/centerX)*8;
+         const rotateX = ((y - centerY) / centerY) * -8;
+         const rotateY = ((x - centerX) / centerX) * 8;
 
-card.style.transform=
-`perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
-});
+         card.style.transform =
+            `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+      });
 
-card.addEventListener("mouseleave",()=>{
-card.style.transform=
-"perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
-});
-});
+      card.addEventListener("mouseleave", () => {
+         card.style.transform =
+            "perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)";
+      });
+   });
 </script>
